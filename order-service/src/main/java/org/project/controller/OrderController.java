@@ -5,6 +5,7 @@ import org.project.dto.OrderRequest;
 import org.project.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,9 +29,9 @@ public class OrderController {
     }
 
     @PostMapping(path = "/order", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<OrderRecord> createOrder(@RequestBody OrderRequest request){
+    public ResponseEntity<OrderRecord> create(@RequestBody OrderRequest request){
         OrderRecord orderRecord = orderService.create(request);
-        return ResponseEntity.ok(orderRecord);
+        return new ResponseEntity(orderRecord, HttpStatus.CREATED);
     }
 
     @GetMapping("/order")

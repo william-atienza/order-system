@@ -12,6 +12,6 @@ public enum Mapper {
     }
 
     public <T> T toObject(String json, Class<T> clazz) throws JsonProcessingException {
-        return mapper.readValue(json, clazz);
+       return mapper.readValue(json, clazz);
     }
 }

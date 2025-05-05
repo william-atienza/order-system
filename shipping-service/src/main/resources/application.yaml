@@ -1,10 +1,10 @@
 server:
   servlet:
     context-path: /silverspin/api/
-  port: 8081
+  port: 8082
 spring:
   application:
-    name: order-service
+    name: shipping-service
 #  cloud:
 #    stream:
 #      kafka:
@@ -14,7 +14,7 @@ spring:
     consumer:
       auto-offset-reset: earliest
       bootstrap-servers: localhost:19092
-      group-id: "order-service"
+      group-id: "shipping-service"
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       #value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer

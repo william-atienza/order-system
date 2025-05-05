@@ -5,13 +5,15 @@
 
 ## Pre-requisite
 - Docker engine or similar (Lima, nerdctl, etc..) should be installed in your system
+
 ## Start MySQL and Kafka
 - You can click the double play button to run the MySQL and Kafka containers using docker/docker-compose.yaml ![docker-compose.png](image/docker-compose.png)
 - The containers should be colored green as in this image if they are started successfully ![services.png](image/services.png)
 
-## Add a Kafka Topic
+## Add Kafka Topics
 - Go to Kakfa UI: http://localhost:8090/ui/clusters/local/all-topics and clicked `[+ Add a Topic]` button ![addtopic.png](image/addtopic.png)
 - Set `order` as the topic name and populate the other details ![createtopic.png](image/createtopic.png)
+- Then create `shipping` topic using the same process as above.
 
 ## Check Kafka and Connector
 - Kakfa UI: http://localhost:8090/

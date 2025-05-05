@@ -12,9 +12,7 @@ import java.util.UUID;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private Instant createdOn;
@@ -28,6 +26,7 @@ public class Order {
     private Account account;
 
     public Order(String shipping, Account account) {
+        this.id = UUID.randomUUID();
         this.shipping = shipping;
         this.account = account;
     }

@@ -1,14 +1,14 @@
 package org.project.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.project.dto.OrderRecord;
-import org.project.dto.OrderRequest;
+import org.project.dto.*;
 import org.project.entity.Account;
 import org.project.entity.Order;
 import org.project.exception.ApplicationException;
 import org.project.kafka.KafkaProducer;
 import org.project.repository.AccountRepository;
 import org.project.repository.OrderRepository;
+import org.project.type.ShipmentStatus;
 import org.project.util.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,16 +40,37 @@ public class OrderService {
             throw new ApplicationException("Account is not found");
         }
         Order order = null;
-        log.info("shipment: {}", request.shippingRecord());
+        ShippingRecord shippingRecord = new ShippingRecord(null, request.shippingRecord().deliveryDate() == null? null: request.shippingRecord().deliveryDate(),
+                request.shippingRecord().deliveryAddress(), ShipmentStatus.REQUESTED);
+
+        log.info("shipment: {}", shippingRecord);
         try {
-            order = new Order(Mapper.INSTANCE.toString(request.shippingRecord()), account.get());
+            order = new Order(Mapper.INSTANCE.toString(shippingRecord), account.get());
         } catch (JsonProcessingException e) {
             log.error("error here: {}",e);
             throw new ApplicationException("Error in converting Shipment data to String.");
         }
         orderRepository.save(order);
-        kafkaProducer.send(order);
-        return new OrderRecord(order.getId(), order.getAccount().getId(), null, null, null);
+
+        OrderRecord orderRecord = new OrderRecord(order.getId(), order.getAccount().getId(), order.getCreatedOn(), order.getLastUpdatedOn(), shippingRecord);
+        kafkaProducer.send(orderRecord);
+        return orderRecord;
+    }
+
+    public void update(String orderRecordJson) {
+        try {
+            OrderRecord orderRecord = Mapper.INSTANCE.toObject(orderRecordJson, OrderRecord.class);
+            Optional<Order> optional = orderRepository.findById(orderRecord.orderId());
+            if(optional.isEmpty()){
+                log.error("Order#{} does not exist.", orderRecord.orderId());
+            }
+
+            Order order = optional.get();
+            order.setShipping(Mapper.INSTANCE.toString(orderRecord.shippingRecord()));
+            orderRepository.save(order);
+        } catch (JsonProcessingException e) {
+            throw new ApplicationException("Cannot convert json to OrderRecord.");
+        }
     }
 
     public OrderRecord getOrder(OrderRecord orderRecord){
@@ -57,11 +78,10 @@ public class OrderService {
         if(account.isEmpty()){
             throw new ApplicationException("Account is not found");
         }
-        Order order = orderRepository.findOrderByIdAndAccount(orderRecord.id(), account.get());
+        Order order = orderRepository.findOrderByIdAndAccount(orderRecord.orderId(), account.get());
         if(order == null){
             throw new ApplicationException("Order is not found");
         }
-        //ShipmentRecord shipmentRecord = new ShipmentRecord();
         return new OrderRecord(order.getId(), order.getAccount().getId(), null, null, null);
     }
 

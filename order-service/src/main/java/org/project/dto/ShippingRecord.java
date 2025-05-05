@@ -5,6 +5,5 @@ import org.project.type.ShipmentStatus;
 import java.time.Instant;
 import java.util.UUID;
 
-public record ShippingRecord(
-        UUID id, Instant deliveryDate, String deliveryAddress, ShipmentStatus status) {
+public record ShippingRecord(UUID orderId, Instant deliveryDate, String deliveryAddress, ShipmentStatus status) {
 }
