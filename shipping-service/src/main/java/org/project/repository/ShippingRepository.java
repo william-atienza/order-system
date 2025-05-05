@@ -7,10 +7,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface ShippingRepository extends JpaRepository<Shipping, UUID> {
-    @Query(value = "SELECT * FROM Shipping WHERE orderId = :orderId ORDER BY OALlastUpdatedOn DESC LIMIT 1", nativeQuery = true)
-    Optional<Shipping> findLatestShippingByOrderId(@Param("orderId") UUID orderId);
+public interface ShippingRepository extends JpaRepository<Shipping, Long> {
+    @Query(value = "SELECT * FROM shipping WHERE order_id = :order_id ORDER BY created_on DESC LIMIT 1", nativeQuery = true)
+    Optional<Shipping> findLatestShippingByOrderId(@Param("order_id") String orderId);
 }

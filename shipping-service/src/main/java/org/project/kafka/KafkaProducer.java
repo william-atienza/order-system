@@ -1,6 +1,7 @@
 package org.project.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.project.dto.ShippingRecord;
 import org.project.entity.Shipping;
 import org.project.util.Mapper;
 import org.slf4j.Logger;
@@ -19,12 +20,12 @@ public class KafkaProducer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void send(Shipping shipping){
+    public void send(ShippingRecord shippingRecord){
         try {
-            kafkaTemplate.send(TOPIC, shipping.getOrderId().toString(), Mapper.INSTANCE.toString(shipping));
+            kafkaTemplate.send(TOPIC, shippingRecord.orderId(), Mapper.INSTANCE.toString(shippingRecord));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        log.info("Produced shipping message {}", shipping);
+        log.info("Produced shipping message {}", shippingRecord);
     }
 }

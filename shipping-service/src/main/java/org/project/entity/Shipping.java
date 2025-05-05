@@ -15,19 +15,22 @@ public class Shipping {
     private Long id;
     @CreationTimestamp
     private Instant createdOn;
-    @UpdateTimestamp
-    private Instant lastUpdatedOn;
     private Instant deliveryDate;
+    private Instant deliveredOn;
     private String deliveryAddress;
     @Enumerated(EnumType.STRING)
     private ShipmentStatus status;
-    private UUID orderId;
+    private String orderId;
+    private String accountId;
 
-    public Shipping(UUID orderId, Instant deliveryDate, String deliveryAddress, ShipmentStatus status){
+    public Shipping(){}
+    public Shipping(String orderId, String accountId, Instant deliveryDate, String deliveryAddress, Instant deliveredOn, ShipmentStatus status){
         this.deliveryDate = deliveryDate;
         this.deliveryAddress = deliveryAddress;
         this.status = status;
         this.orderId = orderId;
+        this.accountId = accountId;
+        this.deliveredOn = deliveredOn;
     }
 
     public Long getId() {
@@ -44,14 +47,6 @@ public class Shipping {
 
     public void setCreatedOn(Instant createdOn) {
         this.createdOn = createdOn;
-    }
-
-    public Instant getLastUpdatedOn() {
-        return lastUpdatedOn;
-    }
-
-    public void setLastUpdatedOn(Instant lastUpdatedOn) {
-        this.lastUpdatedOn = lastUpdatedOn;
     }
 
     public Instant getDeliveryDate() {
@@ -78,11 +73,27 @@ public class Shipping {
         this.status = status;
     }
 
-    public UUID getOrderId() {
+    public String getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(UUID orderId) {
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public Instant getDeliveredOn() {
+        return deliveredOn;
+    }
+
+    public void setDeliveredOn(Instant deliveredOn) {
+        this.deliveredOn = deliveredOn;
     }
 }
