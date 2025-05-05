@@ -1,0 +1,54 @@
+server:
+  servlet:
+    context-path: /silverspin/api/
+  port: 8081
+spring:
+  application:
+    name: order-service
+#  cloud:
+#    stream:
+#      kafka:
+#        binder:
+#          brokers: localhost:9093
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+      bootstrap-servers: localhost:19092
+      #group-id: replace with your group id
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      #value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      #properties:
+        #spring.json.trusted.packages: org.project.kafka
+    producer:
+      acks: -1
+      bootstrap-servers: localhost:19092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      #value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+  datasource:
+    url: jdbc:mysql://localhost:3307/silverspin?createDatabaseIfNotExist=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: admin
+    #JPA Config
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+
+springdoc:
+  api-docs:
+    path=/api-docs:
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor.sql.BasicBinder: TRACE
+        orm.jdbc.bind: TRACE
