@@ -14,7 +14,7 @@ public class AccountService {
         this.repository = repository;
     }
 
-    public Optional<Account> getAccount(Long id){
+    public Optional<Account> getAccount(String id){
         return repository.findById(id);
     }
 

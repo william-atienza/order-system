@@ -30,6 +30,8 @@ dependencies {
     //implementation 'org.springframework.cloud:spring-cloud-starter-stream-kafka'
     implementation 'org.springframework.kafka:spring-kafka'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.3'
+    // https://mvnrepository.com/artifact/io.hypersistence/hypersistence-tsid
+    implementation 'io.hypersistence:hypersistence-tsid:2.1.4'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     //developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
     runtimeOnly 'com.mysql:mysql-connector-j'

@@ -1,5 +1,6 @@
 package org.project.entity;
 
+import io.hypersistence.tsid.TSID;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -12,7 +13,7 @@ import java.util.UUID;
 public class Order {
 
     @Id
-    private UUID id;
+    private String id;
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private Instant createdOn;
@@ -25,17 +26,18 @@ public class Order {
     @ManyToOne
     private Account account;
 
+    public Order(){}
     public Order(String shipping, Account account) {
-        this.id = UUID.randomUUID();
+        this.id = TSID.fast().toString();
         this.shipping = shipping;
         this.account = account;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

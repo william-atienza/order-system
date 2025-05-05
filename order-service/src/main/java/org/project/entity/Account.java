@@ -1,5 +1,6 @@
 package org.project.entity;
 
+import io.hypersistence.tsid.TSID;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -11,8 +12,7 @@ import java.util.List;
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private Instant createdOn;
@@ -22,11 +22,15 @@ public class Account {
 
     @OneToMany(mappedBy = "account")
     private List<Order> orders;
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public Account(){
+        this.id = TSID.fast().toString();
+    }
+
+    public void setId(String id) {
         this.id = id;
     }
 

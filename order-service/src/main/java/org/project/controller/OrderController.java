@@ -1,17 +1,22 @@
 package org.project.controller;
 
+import jakarta.websocket.server.PathParam;
 import org.project.dto.OrderRecord;
 import org.project.dto.OrderRequest;
 import org.project.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 public class OrderController {
@@ -28,14 +33,27 @@ public class OrderController {
         return "index page";
     }
 
-    @PostMapping(path = "/order", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<OrderRecord> create(@RequestBody OrderRequest request){
-        OrderRecord orderRecord = orderService.create(request);
-        return new ResponseEntity(orderRecord, HttpStatus.CREATED);
+    @PostMapping(path = "/orders", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<OrderRecord> create(@RequestBody OrderRequest request) throws ExecutionException, InterruptedException {
+        CompletableFuture<OrderRecord> future = orderService.create(request);
+        return new ResponseEntity(future.get(), HttpStatus.CREATED);
     }
 
-    @GetMapping("/order")
-    public ResponseEntity<OrderRecord> getOrder(@RequestBody OrderRecord request){
-        return ResponseEntity.ok(orderService.getOrder(request));
+    @GetMapping("/orders/{orderId}/{accountId}")
+    public ResponseEntity<OrderRecord> getOrder(@PathVariable("orderId") String orderId,
+                                                @PathVariable("accountId") String accountId){
+        return ResponseEntity.ok(orderService.getOrder(orderId, accountId));
+    }
+
+    @GetMapping(value = "/orders", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<OrderRecord>> getOrders(@PathParam("accountId") String accountId,
+                                                       @PathParam("page") int page,
+                                                       @PathParam("size") int size,
+                                                       @PathParam("sortBy") String sortBy,
+                                                       @PathParam("sortDir") String sortDir){
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page - 1, size, sort);
+        return ResponseEntity.ok(orderService.getOrders(accountId, pageable));
     }
 }

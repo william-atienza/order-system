@@ -1,5 +1,5 @@
 package org.project.type;
 
 public enum ShipmentStatus {
-    REQUESTED, IN_TRANSIT, DELIVERED;
+    REQUESTED, PROCESSING, IN_TRANSIT, DELIVERED;
 }

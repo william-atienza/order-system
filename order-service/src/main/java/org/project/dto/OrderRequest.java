@@ -1,4 +1,4 @@
 package org.project.dto;
 
-public record OrderRequest(Long accountId, ShippingRecord shippingRecord) {
+public record OrderRequest(String accountId, ShippingRecord shippingRecord) {
 }

@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Order, UUID> {
+public interface OrderRepository extends JpaRepository<Order, String> {
     //@Query("SELECT FROM Order WHERE account = :account AND ")
-    public Order findOrderByIdAndAccount(UUID id, Account account);
-    public List<Order> findOrdersByIdAndAccount(UUID id, Account account, Pageable pageable);
+    public Order findOrderByIdAndAccount(String id, Account account);
+    public List<Order> findOrdersByAccount(Account account, Pageable pageable);
 }

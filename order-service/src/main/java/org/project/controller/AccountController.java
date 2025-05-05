@@ -17,7 +17,7 @@ public class AccountController {
     }
 
     //Supposed to be with user details.
-    @PostMapping("/account")
+    @PostMapping("/accounts")
     public ResponseEntity<AccountRecord> create(){
         Account account = repository.save(new Account());
         AccountRecord accountRecord = new AccountRecord(account.getId(), account.getCreatedOn());
