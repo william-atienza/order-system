@@ -19,8 +19,8 @@
 ### Endpoints ###
 * [POST] http://localhost:8081/silverspin/api/accounts - create account
 * [POST] http://localhost:8081/silverspin/api/orders - create order
-* [GET] http://localhost:8081/silverspin/api//orders/{orderId}/{accountId} - get order by orderId and accountId
-* [GET] http://localhost:8081/silverspin/api//orders?accountId={accountId}}&page={page}&size={size}&sortBy={sortBy}&sortDir=DESC 
+* [GET] http://localhost:8081/silverspin/api/orders/{orderId}/{accountId} - get order by orderId and accountId
+* [GET] http://localhost:8081/silverspin/api/orders?accountId={accountId}}&page={page}&size={size}&sortBy={sortBy}&sortDir=DESC 
    - get all orders accountId
 * [POST] http://localhost:8082/silverspin/api/shipping - update shipping record
 
