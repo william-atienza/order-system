@@ -16,6 +16,11 @@
 - You can access the db using MySQL Workbench or any db explorer
 - username: root, password: admin, port: 3307: schema: silverspin
 
+## PHP
+- Nothing here yet as I'm still learning it.
+- To see the php web app, on command line run PHP's web server `php -S localhost:8080`
+
+
 ### Endpoints ###
 * [POST] http://localhost:8081/silverspin/api/accounts - create account
 * [POST] http://localhost:8081/silverspin/api/orders - create order
@@ -36,3 +41,4 @@
 ## Room for Improvements
 - At the moment Unit testing is not included
 - API Security
+- Use Debezium. I tried, but it is not working at the moment.
