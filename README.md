@@ -17,6 +17,16 @@ Simple Order System that utilize the power of Kafka for asynchronous communicati
 - You can access the db using MySQL Workbench or any db explorer
 - username: root, password: admin, port: 3307: schema: silverspin
 
+## Run the App
+### Running locally:
+- `./gradlew build` to build the app
+- `./gradlew bootRun` to run the app locally
+
+### Containerize:
+- `./gradlew bootBuildImage --imageName=order-system` to build the image
+- `docker run -p 8081:8080 -t order-system` to start the app
+- `docker stop <container-id>` to stop
+
 ## PHP
 - Nothing here yet as I'm still learning it.
 - To see the php web app, on command line run PHP's web server `php -S localhost:8080`
