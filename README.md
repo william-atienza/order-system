@@ -1,4 +1,5 @@
 # Order System #
+Simple Order System that utilize the power of Kafka for asynchronous communication between services
 
 ## Pre-requisite
 - Docker engine or similar (Lima, nerdctl, etc..) should be installed in your system
