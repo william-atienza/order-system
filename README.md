@@ -21,6 +21,9 @@ Simple Order System that utilize the power of Kafka for asynchronous communicati
 ### Running locally:
 - `./gradlew build` to build the app
 - `./gradlew bootRun` to run the app locally
+#### If all the services failed to run, run one by one:
+- `./gradlew :order-service:bootRun`
+- `./gradlew :shipping-service:bootRun`
 
 ### Containerize:
 - `./gradlew bootBuildImage --imageName=order-system` to build the image

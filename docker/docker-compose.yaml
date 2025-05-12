@@ -113,7 +113,7 @@ services:
 #        echo $$DEBEZIUM_CONFIG > /tmp/debezium-connector-config.json
 #        curl -X POST -H \"Content-Type: application/json\" --data @/tmp/debezium-connector-config.json http://connect:8083/connectors;
 #      "
-  db:
+  mysql-db:
     image: mysql:8.0
     container_name: mysql8
     restart: always
@@ -126,9 +126,26 @@ services:
       - type: volume
         source: mysql_data
         target: /var/lib/mysql
+    networks:
+      - app_network
+  order-system:
+    image: order-system
+    container_name: order-system
+    ports:
+      - "8081:8081"
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3307/silverspin?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: admin
+    depends_on:
+      - mysql-db
+    networks:
+      - app_network
 volumes:
   mysql_data:
     external: false
 networks:
   kafka_net:
     driver: bridge
+  app_network:

@@ -31,7 +31,8 @@ dependencies {
     implementation 'org.springframework.kafka:spring-kafka'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.3'
     // https://mvnrepository.com/artifact/io.hypersistence/hypersistence-tsid
-    implementation 'io.hypersistence:hypersistence-tsid:2.1.4'
+    //implementation 'io.hypersistence:hypersistence-tsid:2.1.4'
+    implementation 'io.hypersistence:hypersistence-utils-hibernate-63:3.9.10'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     //developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
     runtimeOnly 'com.mysql:mysql-connector-j'
