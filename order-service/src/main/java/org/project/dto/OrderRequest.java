@@ -1,4 +1,6 @@
 package org.project.dto;
 
-public record OrderRequest(String accountId, ShippingRecord shippingRecord) {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public record OrderRequest(String accountId, @JsonProperty("shipping") ShippingRecord shippingRecord) {
 }

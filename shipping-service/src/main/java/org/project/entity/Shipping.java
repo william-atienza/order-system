@@ -22,15 +22,17 @@ public class Shipping {
     private ShipmentStatus status;
     private String orderId;
     private String accountId;
+    private String trackingNumber;
 
     public Shipping(){}
-    public Shipping(String orderId, String accountId, Instant deliveryDate, String deliveryAddress, Instant deliveredOn, ShipmentStatus status){
+    public Shipping(String orderId, String accountId, Instant deliveryDate, String deliveryAddress, Instant deliveredOn, ShipmentStatus status, String trackingNumber){
         this.deliveryDate = deliveryDate;
         this.deliveryAddress = deliveryAddress;
         this.status = status;
         this.orderId = orderId;
         this.accountId = accountId;
         this.deliveredOn = deliveredOn;
+        this.trackingNumber = trackingNumber;
     }
 
     public Long getId() {
@@ -95,5 +97,13 @@ public class Shipping {
 
     public void setDeliveredOn(Instant deliveredOn) {
         this.deliveredOn = deliveredOn;
+    }
+
+    public String getTrackingNumber() {
+        return trackingNumber;
+    }
+
+    public void setTrackingNumber(String trackingNumber) {
+        this.trackingNumber = trackingNumber;
     }
 }

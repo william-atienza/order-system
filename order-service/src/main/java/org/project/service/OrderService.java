@@ -48,7 +48,7 @@ public class OrderService {
         Account account = optional.get();
         Order order = null;
         ShippingRecord shippingRecord = new ShippingRecord(null, account.getId(), request.shippingRecord().deliveryDate() == null? null: request.shippingRecord().deliveryDate(),
-                request.shippingRecord().deliveryAddress(), null,  ShipmentStatus.REQUESTED);
+                request.shippingRecord().deliveryAddress(), null,  ShipmentStatus.REQUESTED, null);
 
         log.info("shipment: {}", shippingRecord);
         try {

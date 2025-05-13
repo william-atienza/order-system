@@ -44,9 +44,11 @@ springdoc:
   api-docs:
     path=/api-docs:
 
-#logging:
-#  level:
-#    org:
+logging:
+  level:
+    org:
+      apache.kafka: WARN
+      spring-kafka: WARN
 #      hibernate:
 #        SQL: DEBUG
 #        type:
