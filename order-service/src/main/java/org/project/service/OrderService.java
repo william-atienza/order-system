@@ -73,7 +73,14 @@ public class OrderService {
             }
 
             Order order = optional.get();
-            order.setShipping(Mapper.INSTANCE.toString(shippingRecord));
+            ShippingRecord oldRecord = Mapper.INSTANCE.toObject(order.getShipping(), ShippingRecord.class);
+            ShippingRecord newRecord = new ShippingRecord(shippingRecord.orderId(), shippingRecord.accountId(),
+                    shippingRecord.deliveryDate() == null? oldRecord.deliveryDate() : shippingRecord.deliveryDate(),
+                    shippingRecord.deliveryAddress() == null? oldRecord.deliveryAddress() : shippingRecord.deliveryAddress(),
+                    shippingRecord.deliveredOn() == null? oldRecord.deliveredOn() : shippingRecord.deliveredOn(),
+                    shippingRecord.status(),
+                    shippingRecord.trackingNumber() == null? oldRecord.trackingNumber() : shippingRecord.trackingNumber());
+            order.setShipping(Mapper.INSTANCE.toString(newRecord));
             orderRepository.save(order);
         } catch (JsonProcessingException e) {
             throw new ApplicationException("Cannot convert json to OrderRecord.");
