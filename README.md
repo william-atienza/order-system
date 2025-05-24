@@ -31,8 +31,10 @@ Simple Order System that utilize the power of Kafka for asynchronous communicati
 - Nothing here yet as I'm still learning it.
 - To see the php web app, on command line run PHP's web server `php -S localhost:8080`
 
+## Troubleshooting
+- Check specific port `netstat -ano | findStr ":80"`
 
-### Endpoints ###
+## Endpoints ##
 * [POST] http://localhost:8081/silverspin/api/accounts - create account
 * [POST] http://localhost:8081/silverspin/api/orders - create order
 * [GET] http://localhost:8081/silverspin/api/orders/{orderId}/{accountId} - get order by orderId and accountId
@@ -41,11 +43,11 @@ Simple Order System that utilize the power of Kafka for asynchronous communicati
 * [POST] http://localhost:8082/silverspin/api/shipping - update shipping record
 
 
-### Postman Collection ###
+## Postman Collection ##
 * Pls check  [Integration Testing.postman_collection.json](misc/postman/Integration%20Testing.postman_collection.json) if you want to test using Postman
 * It contains integration testing for all the end points posted above.
 
-### Swagger Playground ###
+## Swagger Playground ##
 * [order-service] http://localhost:8081/silverspin/api/swagger-ui/index.html
 * [shipping-service] http://localhost:8082/silverspin/api/swagger-ui/index.html
 
