@@ -50,6 +50,7 @@ Simple Order System that utilize the power of Kafka for asynchronous communicati
 ## Swagger Playground ##
 * [order-service] http://localhost:8081/silverspin/api/swagger-ui/index.html
 * [shipping-service] http://localhost:8082/silverspin/api/swagger-ui/index.html
+* [inventory-service] http://localhost:8083/silverspin/api/swagger-ui/index.html
 
 ## Room for Improvements
 - At the moment Unit testing is not included
