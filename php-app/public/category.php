@@ -1,4 +1,25 @@
 <?php
+if (isset($_POST['name-cat'])) {
+    var_dump($_POST['name-cat']);
+    $headers = [
+        'Content-Type' => 'application/json'
+        #'Accept' => 'application/json'
+    ];
+    $postParameter = array(
+        'name' => $_POST['name-cat'],
+        'description' => $_POST['description-cat']
+    );
+    $category = json_encode($postParameter);
+
+    $cUrl = curl_init('http://localhost:8083/silverspin/api/categories');
+    curl_setopt($cUrl, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
+    curl_setopt($cUrl, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($cUrl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($cUrl, CURLOPT_POSTFIELDS, $category);
+
+    $response = curl_exec($cUrl);
+    curl_close($cUrl);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,21 +41,20 @@
     <div class="container">
         <div role="tabs">
             <section>
-                <input hidden="hidden" type="radio" name="tabs" id="tab5" checked="checked" />
                 <figure>
                     <h4>Add Category</h4>
-                    <form>
+                    <form action="" method="POST">
                         <fieldset>
-                            <input type="text" name="name-cat" placeholder="Category name" aria-label="Category name"
+                            <input type="text" id="name-cat" name="name-cat" placeholder="Category name" aria-label="Category name"
                                    required>
-                            <textarea name="description-cat" placeholder="Description" aria-label="description"
+                            <textarea  id="description-cat" name="description-cat" placeholder="Description" aria-label="description"
                                       required></textarea>
                             <button type="submit">Save</button>
                         </fieldset>
                     </form>
                 </figure>
 
-                <input hidden="hidden" type="radio" name="tabs" id="tab6" />
+                <!--
                 <figure>
                     <h4>Add Sub-Category</h4>
                     <form>
@@ -47,6 +67,7 @@
                         </fieldset>
                     </form>
                 </figure>
+                -->
             </section>
         </div>
     </div>

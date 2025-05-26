@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
@@ -15,7 +16,7 @@ public class Product {
     private String name;
     private String description;
     @Column(precision = 10, scale = 2)
-    private double price;
+    private BigDecimal price;
     private int quantity;
     private String imageUrl;
     private Category category;
@@ -27,7 +28,7 @@ public class Product {
     @Column(insertable = false)
     private Instant lastUpdatedOn;
 
-    public Product(String name, String description, double price, int quantity, String imageUrl, Category category, SubCategory subCategory, double weight) {
+    public Product(String name, String description, BigDecimal price, int quantity, String imageUrl, Category category, SubCategory subCategory, double weight) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -62,11 +63,11 @@ public class Product {
         this.description = description;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

@@ -2,17 +2,19 @@ package com.project.inventory.entity;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Category {
+public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
-    private List<SubCategory> subCategories;
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<SubCategory> subCategories = new ArrayList<>();
 
     public Category(String name, List<SubCategory> subCategories) {
         this.name = name;

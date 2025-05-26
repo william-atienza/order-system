@@ -15,12 +15,12 @@ public class CategoryController {
         this.service = service;
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CategoryRecord> save(@RequestBody CategoryRecord categoryRecord){
         return ResponseEntity.ok(service.save(categoryRecord));
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> delete(@RequestBody CategoryRecord categoryRecord){
         service.delete(categoryRecord);
         return ResponseEntity.ok("Category is deleted successfully!");

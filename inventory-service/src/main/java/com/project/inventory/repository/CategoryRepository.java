@@ -16,16 +16,16 @@ import java.util.Optional;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Query("""
             SELECT new com.project.inventory.dto.CategoryRecord(c.id, c.name,
-              (SELECT new new com.project.inventory.dto.SubCategoryRecord(s.id, s.name , null) 
-               FROM SubCategory s WHERE s.category = c )
+              (SELECT new com.project.inventory.dto.SubCategoryRecord(s.id, s.name , null) 
+               FROM SubCategory s WHERE s.category = c ))
             FROM Category c
             """)
     public List<CategoryRecord> getAll();
 
     @Query("""
             SELECT new com.project.inventory.dto.CategoryRecord(c.id, c.name,
-              (SELECT new new com.project.inventory.dto.SubCategoryRecord(s.id, s.name , null)
-               FROM SubCategory s WHERE s.category = c )
+              (SELECT new com.project.inventory.dto.SubCategoryRecord(s.id, s.name , null)
+               FROM SubCategory s WHERE s.category = c ))
             FROM Category c WHERE c.id = :categoryId
             """)
     public Optional<CategoryRecord> getByIdParam(@Param("categoryId") Long categoryId);
