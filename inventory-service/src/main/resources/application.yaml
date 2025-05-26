@@ -1,0 +1,34 @@
+server:
+  servlet:
+    context-path: /silverspin/api
+  port: 8083
+spring:
+  application:
+    name: inventory-service
+  datasource:
+    url: jdbc:mysql://localhost:3307/silverspin?createDatabaseIfNotExist=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: admin
+    #JPA Config
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+
+springdoc:
+  api-docs:
+    path=/api-docs:
+
+logging:
+  level:
+    org:
+      apache.kafka: WARN
+      spring-kafka: WARN
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor.sql.BasicBinder: TRACE
+        orm.jdbc.bind: TRACE
