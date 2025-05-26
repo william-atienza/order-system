@@ -9,6 +9,7 @@ public class SubCategory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true, nullable = false)
     private String name;
     @ManyToOne
     @JoinColumn(name = "category_id")
