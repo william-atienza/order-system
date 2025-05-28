@@ -49,7 +49,7 @@ services:
 #      - 8778:8778
 #    links:
 #      - kafka
-#      - db
+#      - mysqldb
 #    environment:
 #      - BOOTSTRAP_SERVERS=kafka:9092
 #      - GROUP_ID=debezium-events
@@ -113,7 +113,7 @@ services:
 #        echo $$DEBEZIUM_CONFIG > /tmp/debezium-connector-config.json
 #        curl -X POST -H \"Content-Type: application/json\" --data @/tmp/debezium-connector-config.json http://connect:8083/connectors;
 #      "
-  db:
+  mysqldb:
     image: mysql:8.0
     container_name: mysql8
     restart: always
@@ -126,9 +126,54 @@ services:
       - type: volume
         source: mysql_data
         target: /var/lib/mysql
+#    ulimits:
+#      nofile:
+#        soft: 1024
+#        hard: 1024
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$MYSQL_ROOT_PASSWORD"]
+      interval: 30s
+      timeout: 20s
+      retries: 5
+      start_period: 60s
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.2.4
+    ports:
+      - "9081:8080"
+      - "9000:9000"
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_HOSTNAME_STRICT: 'false'
+      KC_HTTP_RELATIVE_PATH: /keycloak
+      KC_PROXY: edge
+      DB: MYSQL
+      DB_URL_HOST: mysql
+      DB_SCHEMA: keycloak
+      DB_USERNAME: root
+      DB_PASSWORD: admin
+#    depends_on:
+#      mysqldb:
+#        condition: service_healthy
+    command:
+      - "start-dev"
+  redis:
+    container_name: redis_bitnami
+    image: bitnami/redis:7.4
+    restart: always
+    ports:
+      - '6379:6379'
+    environment:
+      REDIS_PASSWORD: 'admin'
+    #command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    volumes:
+      - cache:/data
+
 volumes:
   mysql_data:
     external: false
+  cache:
+    driver: local
 networks:
   kafka_net:
     driver: bridge
