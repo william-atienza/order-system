@@ -5,6 +5,8 @@ import com.project.inventory.dto.SubCategoryRecord;
 import com.project.inventory.entity.Category;
 import com.project.inventory.exception.CategoryException;
 import com.project.inventory.repository.CategoryRepository;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,11 +20,13 @@ public class CategoryService {
         this.repository = repository;
     }
 
+    @Cacheable(value = "categoryCache", key = "#categoryRecord.name")
     public CategoryRecord save(CategoryRecord categoryRecord){
         Category category = repository.save(new Category(categoryRecord.name(), null));
         return new CategoryRecord(category.getId(), category.getName(), null);
     }
 
+    @CacheEvict(value = "categoryCache", key = "#categoryRecord.name")
     public void delete(CategoryRecord categoryRecord){
         Category category = repository.findById(categoryRecord.id()).orElseThrow(() -> new CategoryException("Category not found!"));
         repository.delete(category);
@@ -32,10 +36,12 @@ public class CategoryService {
         return repository.getAll();
     }
 
+    @Cacheable(value = "categoryCache", key = "#id")
     public CategoryRecord getCategoryById(Long id){
         return repository.getByIdParam(id).orElseThrow(() -> new CategoryException("Category not found!"));
     }
 
+    @Cacheable(value = "categoryCache", key = "#name")
     public CategoryRecord getCategoryByName(String name){
         return repository.findByNameContaining(name).orElseThrow(() -> new CategoryException("Category not found!"));
     }
