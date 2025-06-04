@@ -2,7 +2,6 @@ package com.project.inventory.controller;
 
 import com.project.inventory.dto.ProductRecord;
 import com.project.inventory.service.ProductService;
-import jakarta.websocket.server.PathParam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
