@@ -3,4 +3,5 @@ rootProject.name = 'order-system'
 include 'order-service'
 include 'shipping-service'
 include 'inventory-service'
+include 'eureka-server'
 
