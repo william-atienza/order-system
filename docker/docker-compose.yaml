@@ -168,7 +168,17 @@ services:
     #command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
     volumes:
       - cache:/data
-
+  cadvisor:
+    image: 'gcr.io/cadvisor/cadvisor:v0.49.2'
+    container_name: 'cadvisor'
+    ports:
+      - '8087:8080'
+    volumes:
+      - '/:/rootfs:ro'
+      - '/var/run:/var/run:rw'
+      - '/sys:/sys:ro'
+      - '/var/lib/docker/:/var/lib/docker:ro'
+      - '/var/run/docker.sock:/var/run/docker.sock'
 volumes:
   mysql_data:
     external: false
