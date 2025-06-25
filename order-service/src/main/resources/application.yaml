@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /silverspin/api/
+    context-path: /api/
   port: 8081
 spring:
   application:

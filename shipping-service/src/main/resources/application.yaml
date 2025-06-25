@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /silverspin/api/
+    context-path: /api/
   port: 8082
 spring:
   application:
@@ -47,6 +47,8 @@ springdoc:
 logging:
   level:
     org:
+#      springframework:
+#        web: TRACE
       hibernate:
         SQL: DEBUG
         type:
