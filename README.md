@@ -4,7 +4,7 @@ Simple Order System that utilize the power of Kafka for asynchronous communicati
 ## Pre-requisite
 - Docker engine or similar (Lima, nerdctl, etc..) should be installed in your system
 
-## Start MySQL and Kafka
+## Start MySQL, Kafka, Redis and Keycloak
 - You can click the double play button to run the MySQL and Kafka containers using docker/docker-compose.yaml ![docker-compose.png](misc/image/docker-compose.png)
 - The containers should be colored green as in this image if they are started successfully ![services.png](misc/image/services.png)
 
@@ -16,6 +16,15 @@ Simple Order System that utilize the power of Kafka for asynchronous communicati
 ## MySQL DB
 - You can access the db using MySQL Workbench or any db explorer
 - username: root, password: admin, port: 3307: schema: silverspin
+
+## Redis
+- Download Redis Insight https://redis.io/insight/ if you wan to have a GUI of your redis cache
+
+## Keycloak
+- Access Keycloak UI: http://localhost:9081/keycloak and login ![login.png](misc/image/keycloak/login.png)
+- Add `super-grocery` realm ![img.png](misc/image/keycloak/realm/createrealmbutton.png) ![createrealm.png](misc/image/keycloak/realm/createrealm.png)
+- Add client: ![createclient_gensettings.png](misc/image/keycloak/client/createclient_gensettings.png) 
+
 
 ## Run the App
 ### Running locally:
@@ -52,7 +61,26 @@ Simple Order System that utilize the power of Kafka for asynchronous communicati
 * [shipping-service] http://localhost:8082/silverspin/api/swagger-ui/index.html
 * [inventory-service] http://localhost:8083/silverspin/api/swagger-ui/index.html
 
+## Resource Consumption Monitoring Tool
+We will use JConsole tool. To run it, open a new terminal and run:
+`jconsole`
+
+**Running applications as Docker containers**
+
+We will use the `cAdvisor` tool. In a browser, access:
+  - To explore the running containers: http://localhost:8087/docker/
+  - To go directly to a specific container:
+    - order-service: http://localhost:8087/docker/order-service
+    - shipping-service: http://localhost:8087/docker/shipping-service
+    - inventory-service: http://localhost:8087/docker/inventory-service
+
+## Eureka Server
+- Access from http://localhost:8761
+
+## Harbor Container Registry
+- Access from http://localhost/
+  - credentials:`springboot/Springboot1`
+
 ## Room for Improvements
-- At the moment Unit testing is not included
 - API Security
 - Use Debezium. I tried, but it is not working at the moment.
